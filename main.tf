@@ -157,7 +157,7 @@ resource "aws_instance" "web" {
   subnet_id  = element(aws_subnet.cluster-vpc-subnets-public.*.id, count.index)
   associate_public_ip_address  = true
   key_name = "key-01"
-  count = 2
+  count = var.instance_count
   vpc_security_group_ids = [aws_security_group.bastion-sg.id]
 
   tags = {
