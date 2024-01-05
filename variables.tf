@@ -32,3 +32,9 @@ variable "ami_id" {
 description = "aws ami id"
 type = string
 }
+
+variable "instance_count" {
+description = "instance count"
+type = number
+}
+
