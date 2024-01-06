@@ -28,13 +28,13 @@ variable "aws_cidr_subnets_private" {
   description = "AWS private subnet list"
   type        = list(string)
 }
-variable "ami_id" {
+
+
+variable "ami_id_bastion" {
 description = "aws ami id"
 type = string
 }
-
-variable "instance_count" {
-description = "instance count"
-type = number
+variable "ami_id_private" {
+description = "aws ami id"
+type = string
 }
-
