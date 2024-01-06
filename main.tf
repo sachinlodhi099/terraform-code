@@ -149,19 +149,32 @@ resource "aws_security_group" "Private-sg" {
 
 
 
-
 resource "aws_instance" "web" {
-  ami           = var.ami_id
-  instance_type = "t3.micro"
-  
-  subnet_id  = element(aws_subnet.cluster-vpc-subnets-public.*.id, count.index)
-  associate_public_ip_address  = true
-  key_name = "key-01"
-  count = var.instance_count
-  vpc_security_group_ids = [aws_security_group.bastion-sg.id]
+  ami           = var.ami_id_bastion
+    instance_type = "t3.micro"
+      
+        subnet_id  = element(aws_subnet.cluster-vpc-subnets-public.*.id, count.index)
+	  associate_public_ip_address  = true
+	    key_name = "key-01"
+	      count = 2
+	        vpc_security_group_ids = [aws_security_group.bastion-sg.id]
 
-  tags = {
-    Name = "MY_Terrafom_Instance-${count.index}"
-  }
-}
+		  tags = {
+		      Name = "MY_Terrafom_Instance-bastion-${count.index}"
+		        }
+			}
 
+resource "aws_instance" "slave" {
+  ami           = var.ami_id_private
+    instance_type = "t3.micro"
+			      
+      subnet_id  = element(aws_subnet.cluster-vpc-subnets-public.*.id, count.index)
+	 associate_public_ip_address  = true
+	   key_name = "key-01"
+	   count = 1
+	     vpc_security_group_ids = [aws_security_group.bastion-sg.id]
+
+		   tags = {
+		      Name = "MY_Terrafom_Instance-private-${count.index}"
+					        }
+						}
